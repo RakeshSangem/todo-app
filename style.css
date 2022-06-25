@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(39, 38, 38);
+}
+
+.backgroun-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    /* width: 100%; */
+}
+
+.backgroun-image img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.container {
+    /* display: flex; */
+    /* align-items: center; */
+    margin-top: 5%;
+    width: 100%;
+    max-width: 700px;
+    /* background-color:rgb(39, 38, 38); */
+    /* color: wheat; */
+}
+
+.header {
+    /* font-size: rem; */
+    /* margin: 10px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    /* margin-top: 10px; */
+    font-family: 'Lato', sans-serif;
+    color: white;
+    font-size: 3.5rem;
+    letter-spacing: 10px;
+}
+
+.new-todo {
+    background-color: rgb(39, 38, 38);
+    height: 60px;
+    margin-top: 50px;
+    border-radius: 8px;
+    display: flex;
+}
+
+.new-todo:hover {
+    border: 1px solid rgb(38, 168, 151);
+    box-shadow: 1px 1px 8px 2px rgba(137, 237, 255, 0.411);
+}
+
+.check {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check-mark {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid hsl(237, 14%, 26%);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check-mark img {
+    visibility: hidden;
+}
+
+.check-mark.checked img,
+.check-mark:hover img {
+    visibility: visible;
+}
+
+.check-mark:hover {
+    border-color: linear-gradient(135deg, #55DDFF 0%, #C058F3 100%);
+    background: linear-gradient(135deg, #55DDFF 0%, #C058F3 100%);
+}
+
+.check-mark.checked {
+    background-color: pink;
+    background: linear-gradient(135deg, #55DDFF 0%, #C058F3 100%);
+}
+
+.todo-text.checked {
+    text-decoration: line-through;
+    color: hsl(234, 19%, 61%);
+}
+
+.new-todo-input form {
+    /* width: 100%; */
+    flex-grow: 1;
+    display: flex;
+}
+
+.new-todo-input {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.new-todo-input input {
+    width: 100%;
+    font-size: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
+    /* height: 60px; */
+    /* padding: 5px 5px; */
+    /* margin: 0 10px; */
+    background-color: transparent;
+    border: none;
+    outline: none;
+    caret-color: white;
+    color: #fff;
+    font-weight: 200;
+}
+
+.new-todo-input input::placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.05rem;
+    color: rgb(134, 134, 134);
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+}
+
+button {
+    border-radius: 0px 6px 6px 0px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size:16px;
+    padding: 0.7em 1.7em;
+    width: 100%;
+    height: 100%;
+    background: #3785a3b9;
+    border: 0px solid #5f0000;
+    transition: all .5s ease;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #83dcffb9;
+
+    /* border: 1px solid white; */
+    /* box-shadow: 0px 0px 2px 1px #c5c5c5; */
+    /* 0px 0px 1px #ffffff; */
+}
+
+.todo-item:hover {
+    transform: translate(-2px);
+    box-shadow: 0 0px 7px 0px hsl(235, 21%, 11%);
+    border-bottom: 0;
+}
+
+.todo-item {
+    width: 100%;
+    /* background-color: yellow; */
+    display: flex;
+    height: 70px;
+    border-bottom: 1px solid hsl(237, 14%, 26%);
+    color: rgb(201, 198, 198);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 10;
+    cursor: pointer;
+    animation: todo-animation 1s;
+}
+
+@keyframes todo-animation {
+
+    0% {
+        background-color: none;
+    }
+
+    100% {
+        background-color: rgba(158, 229, 255, 0.429);
+
+    }
+
+}
+
+.todo-text {
+    display: flex;
+    align-items: center;
+}
+
+.todo-items-wrapper {
+    margin: 20px 0 30px 0;
+    background-color: rgb(39, 38, 38);
+    border-radius: 6px;
+    box-shadow: 0px 2px 30px 0px rgba(0, 0, 0, 0.4);
+}
+
+.todo-items-info {
+    height: 70px;
+    width: 100%;
+    color: rgba(136, 131, 131, 0.624);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.items-statuses {
+    display: flex;
+    justify-content: center;
+}
+
+.items-statuses span {
+    padding: 0 6px;
+    cursor: pointer;
+}
+
+.items-statuses span:hover,
+.items-statuses span.active,
+.items-clear:hover {
+    color: hsl(220, 98%, 61%);
+}
+
+.items-clear {
+    cursor: pointer;
+    text-align: end;
+}
+
+@media only screen and (max-device-width: 480px) {
+    .header {
+        margin: 30px 20px;
+    }
+
+    .new-todo {
+        margin: 0 20px;
+    }
+
+    .todo-items-wrapper {
+        margin: 20px;
+    }
+
+}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Todo-APP</title>
+  </head>
+
+  <body>
+    <div class="backgroun-image">
+      <img src="./assets/bg-desktop-dark.jpg" alt="Image" />
+    </div>
+    <div class="container">
+      <div class="header">
+        <div class="title">TODO</div>
+        <div class="theme">
+          <img src="./assets/icon-sun.svg" alt="them_image" />
+        </div>
+      </div>
+      <div class="new-todo">
+        <div class="check">
+          <div class="check-mark">
+            <!-- <img src="./assets/icon-check.svg" alt="check-box"> -->
+          </div>
+        </div>
+        <div class="new-todo-input">
+          <form id="formSubmit">
+            <input
+              id="todoInput"
+              type="text"
+              placeholder="Create a new todo..."
+              autofocus
+            />
+          </form>
+        </div>
+        <div class="button">
+          <button
+            id="submitbtn"
+            form="formSubmit"
+            type="submit"
+            target="formSubmit"
+          >
+            ADD
+          </button>
+        </div>
+      </div>
+      <div class="todo-items-wrapper">
+        <div class="todo-items">
+          <div class="todo-item">
+            <div class="check">
+              <div class="check-mark">
+                <img src="./assets/icon-check.svg" alt="" />
+              </div>
+            </div>
+            <div class="todo-text">hello rakesh</div>
+          </div>
+          <div class="todo-item">
+            <div class="check">
+              <div class="check-mark" id="check_mark">
+                <img src="./assets/icon-check.svg" alt="" />
+              </div>
+            </div>
+            <div class="todo-text">grocerries</div>
+          </div>
+          <div class="todo-item">
+            <div class="check">
+              <div class="check-mark" id="check_mark">
+                <img src="./assets/icon-check.svg" alt="" />
+              </div>
+            </div>
+            <div class="todo-text">project</div>
+          </div>
+          <div class="todo-item">
+            <div class="check">
+              <div class="check-mark" id="check_mark">
+                <img src="./assets/icon-check.svg" alt="" />
+              </div>
+            </div>
+            <div class="todo-text">Gym</div>
+          </div>
+        </div>
+        <div class="todo-items-info">
+          <div class="items-left">5 items left</div>
+          <div class="items-statuses">
+            <span class="active">All</span>
+            <span>Active</span>
+            <span>Completed</span>
+          </div>
+          <div class="items-clear">
+            <span> Clear completed </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyASQ-CK7fLXPAV20ghJx6E3dYpzUd97Sw8",
+        authDomain: "todo-af3ef.firebaseapp.com",
+        databaseURL: "https://todo-af3ef-default-rtdb.firebaseio.com",
+        projectId: "todo-af3ef",
+        storageBucket: "todo-af3ef.appspot.com",
+        messagingSenderId: "440190831323",
+        appId: "1:440190831323:web:a13684c30bf91fa0b65afe",
+      };
+      const app = initializeApp(firebaseConfig);
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        getDocs,
+        onSnapshot,
+        setDoc,
+        collection,
+        serverTimestamp,
+        addDoc,
+        orderBy,
+        query,
+        updateDoc,
+        deleteDoc,
+        deleteField,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+      const db = getFirestore();
+      //--------References--------------
+
+      let todoInput = document.getElementById("todoInput");
+      let submitbtn = document.getElementById("submitbtn");
+
+      //----------------Add items to database---------
+
+      async function addItems(event) {
+        event.preventDefault();
+        var ref = collection(db, "todos");
+
+        const docRef = addDoc(ref, {
+          text: todoInput.value,
+          status: "active",
+          timestamp: serverTimestamp(),
+        }).then(() => {
+          document.getElementById("formSubmit").reset();
+        });
+      }
+      async function GetItems() {
+        const docSnap = collection(db, "todos");
+        const q = query(docSnap, orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+          let items = [];
+          snapshot.docs.forEach((doc) => {
+            items.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+          generateItems(items);
+        });
+      }
+      function generateItems(items) {
+        let itmesHTML = "";
+        items.forEach((item) => {
+          //  console.log(item);
+          itmesHTML += `
+          <div class="todo-item" style="animation:todo-animation 0.6s ease;
+            @keyframes todo-animation {background-color:rgba(158, 229, 255, 0.2);}">
+            <div class="check">
+              <div data-id="${item.id}" class="check-mark ${
+            item.status == "completed" ? "checked" : ""
+          }">
+              <img src="./assets/icon-check.svg" alt="" />
+              </div>
+            </div>
+            <div class="todo-text ${
+              item.status == "completed" ? "checked" : ""
+            }" id="todoText"> ${item.text} </div>
+          </div>
+                    `;
+        });
+        document.querySelector(".todo-items").innerHTML = itmesHTML;
+
+        createEventListners();
+      }
+      function createEventListners() {
+        let todoCheckMarks = document.querySelectorAll(
+          ".todo-item .check-mark"
+        );
+        todoCheckMarks.forEach((checkMark) => {
+          checkMark.addEventListener("click", function () {
+            markCompleted(checkMark.dataset.id);
+          });
+        });
+      }
+      //------------Mark Completed-------------------
+
+      function markCompleted(id) {
+        const docRef = doc(db, "todos", id);
+        let docSnap = getDoc(docRef);
+        docSnap.then(function (doc) {
+          // console.log(doc.data().status);
+          if (doc.exists()) {
+            if (doc.data().status == "active") {
+              updateDoc(docRef, {
+                status: "completed",
+              });
+            } else {
+              updateDoc(docRef, {
+                status: "active",
+              });
+            }
+          }
+        });
+      }
+     //----------------Event Listeners----------
+      submitbtn.addEventListener("click", addItems);
+      GetItems();
+    </script>
+  </body>
+</html>

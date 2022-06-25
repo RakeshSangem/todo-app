@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="auth.css" />
+    <title>Todo | Login</title>
+    <script src="auth.js"></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="#" class="logo">Coding Community</a>
+      <img src="./menu.png" alt="toggle" />
+      <div class="menu">
+        <ul class="list">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="main-container">
+      <form action="" id="singnForm">
+        <h1>Sign in</h1>
+        <hr />
+        <input
+          type="email"
+          name="email"
+          id="emailBox"
+          placeholder="john@example.com"
+        />
+        <input
+          type="password"
+          name="password"
+          id="passwordBox"
+          placeholder="********"
+        />
+        <button type="submit" id="submitBtn">Sign in</button>
+        <p>New to Coding Community.?<a href="" id="singn_Upbtn">Sign Up</a></p>
+      </form>
+      <!-- Sign Up DIV -->
+      <!-- <div class="signUP" id="signupdiv">
+               <form action="" id="signupForm">
+                    <h1>Sign up</h1>
+                    <input type="email" name="email" id="semaiBox" placeholder="john@example.com">
+                    <input type="password" name="password" id="spasswordBox" placeholder="********">
+                    <button type="submit" id="signUpBtn">Sign up</button>
+                    <p>Existing member?<a href="" id="signinbtn">Sign in</a></p>
+               <form action=""></form>
+          </div> -->
+    </div>
+    <!-- <script>
+          const signupdiv = document.getElementById("signupdiv");
+          const singnForm = document.getElementById("singnForm");
+
+          // Buttons
+          const singn_Upbtn = document.getElementById("singn_Upbtn");
+          const signinbtn = document.getElementById("signinbtn");
+          
+
+          singn_Upbtn.addEventListener("click",(e)=>{
+               e.preventDefault();
+               singnForm.style.display = "none";
+               signupdiv.style.display = "block";
+          })
+     </script> -->
+    <script type="module">
+
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyASQ-CK7fLXPAV20ghJx6E3dYpzUd97Sw8",
+        authDomain: "todo-af3ef.firebaseapp.com",
+        databaseURL: "https://todo-af3ef-default-rtdb.firebaseio.com",
+        projectId: "todo-af3ef",
+        storageBucket: "todo-af3ef.appspot.com",
+        messagingSenderId: "440190831323",
+        appId: "1:440190831323:web:a13684c30bf91fa0b65afe",
+      };
+      const app = initializeApp(firebaseConfig);
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+      const auth = getAuth();
+     //  firebase.auth.onAuthStateChanged((user) => {
+     //    if (user) {
+     //      location.replace("index.html");
+     //    }
+     //  });
+     login();
+     document.getElementById("#singnForm").addEventListener("submit",(e)=>{
+          e.preventDefault();
+     })
+      document
+        .querySelector("#submitBtn")
+        .addEventListener("click", (event) => {
+          event.preventDefault();
+          login();
+        });
+
+      function login() {
+        alert("work");
+        const email = document.getElementById("emailBox").value;
+        const password = document.getElementById("passwordBox").value;
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            alert(user.email);
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+      }
+      // document.getElementById("submitBtn").addEventListener("click",(e)=>{
+      //      e.preventDefault();
+      //      let semail = document.getElementById("semaiBox").value;
+      //   let spassword = document.getElementById("spasswordBox").value;
+      //   createUserWithEmailAndPassword(auth, semail, spassword)
+      //     .then((userCredential) => {
+      //       // Signed in
+      //       const user = userCredential.user;
+      //       alert("User SignUP");
+      //     })
+      //     .catch((error) => {
+      //       const errorCode = error.code;
+      //       const errorMessage = error.message;
+      //       alert(errorCode + errorMessage);
+      //     });
+      // })
+      // function signUp() {
+      //      alert("Inside Functioin")
+      //   let semail = document.getElementById("semaiBox").value;
+      //   let spassword = document.getElementById("spasswordBox").value;
+      //   createUserWithEmailAndPassword(auth, semail, spassword)
+      //     .then((userCredential) => {
+      //       // Signed in
+      //       const user = userCredential.user;
+      //       alert("User SignUP");
+      //     })
+      //     .catch((error) => {
+      //       const errorCode = error.code;
+      //       const errorMessage = error.message;
+      //       alert(errorCode + errorMessage);
+      //     });
+      // }
+    </script>
+  </body>
+</html>
