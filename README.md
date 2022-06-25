@@ -8,6 +8,7 @@ a todo list app that uses firebase firestore as backend/databbase.
 
 Check out the website **[here](https://todo-app-by-rakesh.netlify.app)**
 
+![Screenshot (40)](https://user-images.githubusercontent.com/107752425/175771559-388e0bc8-1c33-47aa-a1df-8837c6f5af0f.png)
 
 ## Contributing
 
